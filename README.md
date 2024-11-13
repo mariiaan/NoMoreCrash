@@ -1,6 +1,8 @@
 # NoMoreCrash
 
-NoMoreCrash is a Windows CLI tool designed to disable Win32 exception handling for a target process. Note that this tool does **not** handle abnormal terminations, such as those caused by `std::abort`.
+NoMoreCrash is a Windows CLI tool designed to disable Win32 exception handling for a target process. 
+
+It is excellent at handling artihmatic exceptions (like dividing by 0) or out-of-bounds writes/reads. Note that this tool does **not** handle abnormal terminations, such as those caused by `std::abort`.
 
 The tool requires the same or higher privileges than the target process. For instance, you need user-level privileges to target processes like `explorer.exe` but administrator rights if you're targeting system processes (which is not recommended).
 
@@ -61,4 +63,5 @@ To compile NoMoreCrash, you'll need **Visual Studio 2022** with C++ support or l
 
 The idea for NoMoreCrash came about one evening while I was doing some memory corruption experiments with a colleague in the Unity game engine runtime. More often than not, the engine would crash, which wasn’t what we wanted. This tool was created as a way to address that issue and prevent the engine from crashing in these situations.
 
+Also: It's kinda funny to see how programs die without crashing.
 ---
