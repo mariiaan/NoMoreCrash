@@ -24,6 +24,11 @@ int main()
 		if (i < 5) Sleep(1000);
 	}
 
+	std::cout << "Trying abort...\n";
+	std::abort();
+	std::cout << "Still running!\n";
+	Sleep(1000);
+
 	int cnt = 0;
 	while (true)
 	{
