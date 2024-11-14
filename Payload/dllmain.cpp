@@ -18,7 +18,7 @@ LONG WINAPI MyFilter(PEXCEPTION_POINTERS pExceptionInfo)
 	}
 
 	exceptionRipHistory[historyIndex] = pExceptionInfo->ContextRecord->Rip;
-	historyIndex = (historyIndex + 1) / HISTORY_SIZE
+	historyIndex = (historyIndex + 1) / HISTORY_SIZE;
 	
     pExceptionInfo->ContextRecord->Rip += instructionsToSkip;
     return EXCEPTION_CONTINUE_EXECUTION;
