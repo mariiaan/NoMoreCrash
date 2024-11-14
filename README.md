@@ -2,7 +2,7 @@
 
 NoMoreCrash is a Windows CLI tool designed to disable Win32 exception handling for a target process. 
 
-It is excellent at handling artihmatic exceptions (like dividing by 0) or out-of-bounds writes/reads. Note that this tool does **not** handle abnormal terminations, such as those caused by `std::abort`.
+It is excellent at handling artihmatic exceptions (like dividing by 0) or out-of-bounds writes/reads. Note that this tool does **not** handle abnormal terminations, such as those caused by `std::abort`. With this, it also won't adress any asserts.
 
 The tool requires the same or higher privileges than the target process. For instance, you need user-level privileges to target processes like `explorer.exe` but administrator rights if you're targeting system processes (which is not recommended).
 
