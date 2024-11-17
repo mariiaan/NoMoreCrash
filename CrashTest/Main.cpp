@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Windows.h>
+#include <cassert>
 
 // This program is just a demonstration for testing.
 
@@ -23,6 +24,17 @@ int main()
 		std::cout << "I'm still running!\n";
 		if (i < 5) Sleep(1000);
 	}
+
+	std::cout << "Trying abort...\n";
+	std::abort();
+	std::cout << "Still running!\n";
+	Sleep(1000);
+
+	std::cout << "Trying to assert...\n";
+	assert(0);
+
+	std::cout << "Survived assert!\n";
+	Sleep(1000);
 
 	int cnt = 0;
 	while (true)
