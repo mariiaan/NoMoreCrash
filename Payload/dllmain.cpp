@@ -59,7 +59,7 @@ static void MakeFunctionReturn(void* pFunction)
 {
 	DWORD oldProtect;
 	VirtualProtect(pFunction, 1, PAGE_READWRITE, &oldProtect);
-	*(unsigned char*)pFunction = 0xC3;
+	*(unsigned char*)pFunction = OP_RET;
 	VirtualProtect(pFunction, 1, oldProtect, &oldProtect);
 }
 
