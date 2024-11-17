@@ -7,6 +7,8 @@
 
 #define TRY_DEFEAT_LOOPS 1
 
+#define TRY_OVERWRITE_ABORT 1
+
 #define HISTORY_SIZE 1024
 
 #if TRY_DEFEAT_LOOPS
@@ -72,10 +74,12 @@ BOOL APIENTRY DllMain(HMODULE, DWORD ulReason, LPVOID)
 
 	// just do it every time, don't care.
 	SetUnhandledExceptionFilter(MyFilter);
-	
+
+#if TRY_OVERWRITE_ABORT
 	MakeFunctionReturn(abort);
 	MakeFunctionReturn(ExitProcess);
 	MakeFunctionReturn(terminate);
+#endif
 
 	return TRUE;
 }
