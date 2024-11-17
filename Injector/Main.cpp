@@ -11,9 +11,9 @@
 // Things like std::abort() will still crash the program because they are not exceptions.
 
 #if NDEBUG  // release
-	#define PAYLOAD_SIZE 10240
+	#define PAYLOAD_SIZE 13824
 #else		// debug
-	#define PAYLOAD_SIZE 59904
+	#define PAYLOAD_SIZE 276992
 #endif
 
 static bool InjectDLL(uint32_t pid, const std::string& dllName)
