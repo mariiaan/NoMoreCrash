@@ -10,6 +10,7 @@
 // and let the program continue execution. This way, the program won't crash anymore.
 // Things like std::abort() will still crash the program because they are not exceptions.
 
+// This is just as hacky as the rest of this project. You'll have to patch the sizes (in bytes) of your compiled Payload.dll file below:
 #if NDEBUG  // release
 	#define PAYLOAD_SIZE 13824
 #else		// debug
