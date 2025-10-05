@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
-		std::cerr << "Usage: NoMoreCrash.exe <PID> OR NoMoreCrash.exe --im <NAME>" << std::endl;
+		std::cerr << "Usage: NoMoreCrash.exe <PID> OR NoMoreCrash.exe --im <NAME> OR NoMoreCrash.exe --ex <PATH> <ARGS>" << std::endl;
 		return 1;
 	}
 
@@ -170,6 +170,49 @@ int main(int argc, char* argv[])
 			std::cerr << "Failed to get target PID" << std::endl;
 			return 1;
 		}
+	}
+	else if (args[0] == "--ex")
+	{
+		if (args.size() < 2)
+		{
+			std::cerr << "NoMoreCrash.exe --ex <PATH> <ARGS>" << std::endl;
+			return 1;
+		}
+
+		std::wstring targetExecutable(args[1].begin(), args[1].end());
+
+		std::wstring targetArguments{};
+		if (args.size() > 2)
+			targetArguments = std::wstring(args[2].begin(), args[2].end());
+
+		STARTUPINFO si{};
+		si.cb = sizeof(si);
+
+		PROCESS_INFORMATION pi{};
+
+		bool success = CreateProcessW(
+			targetExecutable.c_str(),
+			const_cast<wchar_t*>(targetArguments.c_str()),
+			NULL,
+			NULL,
+			FALSE,
+			0,
+			NULL,
+			NULL,
+			&si,
+			&pi
+		);
+
+		CloseHandle(pi.hThread);
+		CloseHandle(pi.hProcess);
+
+		if (!success)
+		{
+			std::cerr << "Failed to start executable!" << std::endl;
+			return 1;
+		}
+
+		targetPid = pi.dwProcessId;
 	}
 	else
 	{
