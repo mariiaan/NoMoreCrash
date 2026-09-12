@@ -114,7 +114,8 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /B $(SolutionDir)x64\Debug\Injector.exe+$(SolutionDir)x64\Debug\Payload.dll $(SolutionDir)x64\Debug\NoMoreCrash.exe</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,7 +134,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B $(SolutionDir)x64\Release\Injector.exe+$(SolutionDir)x64\Release\Payload.dll $(SolutionDir)x64\Release\NoMoreCrash.exe</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

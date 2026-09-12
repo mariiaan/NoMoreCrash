@@ -48,20 +48,11 @@ By using this tool, you assume full responsibility for any damage to your system
 ## Compilation
 
 ### Prerequisites:
-To compile NoMoreCrash, you'll need **Visual Studio 2022** with C++ support or later (it may also work with earlier versions).
+To compile NoMoreCrash, you'll need **Visual Studio 2022** with C++ support or later (it may also work with earlier/newer versions).
 
 ### Build Instructions:
 
-1. **Build the Payload Project:**
-   - After building the Payload project, check the file size of `Payload.dll`.
-   - Insert the correct file size into the appropriate location (begin of Main.cpp of Injector Preject, DEFINE "PAYLOAD_SIZE") (use the release size for the release build and the debug size for the debug build).
-
-2. **Build the Injector Project:**
-   - This will automatically append the `Payload.dll` to the `Injector.exe`, creating a single executable.
-   - The resulting file will be named `NoMoreCrash.exe`.
-
-3. **Final Step:**
-   - You’ll now have the `NoMoreCrash.exe` file. The `Injector.exe` and `Payload.dll` can now be safely deleted.
+Just build the solution
 
 ---
 

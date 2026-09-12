@@ -10,13 +10,6 @@
 // and let the program continue execution. This way, the program won't crash anymore.
 // Things like std::abort() will still crash the program because they are not exceptions.
 
-// This is just as hacky as the rest of this project. You'll have to patch the sizes (in bytes) of your compiled Payload.dll file below:
-#if NDEBUG  // release
-	#define PAYLOAD_SIZE 13824
-#else		// debug
-	#define PAYLOAD_SIZE 276992
-#endif
-
 static bool InjectDLL(uint32_t pid, const std::string& dllName)
 {
 	std::cout << "Injecting DLL into process with PID: " << pid << std::endl;
@@ -68,47 +61,6 @@ static bool InjectDLL(uint32_t pid, const std::string& dllName)
 	return true;
 }
 
-static bool ExtractFromOwnFile(size_t size, const std::string& outFile)
-{
-	std::cout << "Extracting resource \"" << outFile << "\" with size " << size << std::endl;
-
-	std::ifstream ifs1(outFile, std::ios::binary | std::ios::ate);
-	if (ifs1.is_open())
-		return true;
-	ifs1.close();
-
-	wchar_t path[MAX_PATH];
-	GetModuleFileNameW(NULL, path, MAX_PATH);
-
-	std::ifstream ifs(path, std::ios::binary | std::ios::ate);
-	if (!ifs.is_open())
-	{
-		std::cout << "Failed to extract resources" << std::endl;
-		return false;
-	}
-
-	size_t ownFileSize = ifs.tellg();
-	size_t sizeWithoutPayload = ownFileSize - size;
-	ifs.seekg(sizeWithoutPayload, std::ios::beg);
-
-	std::vector<char> payload(size);
-	ifs.read(payload.data(), size);
-	ifs.close();
-
-	std::ofstream ofs(outFile, std::ios::binary);
-	if (!ofs.is_open())
-	{
-		std::cout << "Failed to extract resources" << std::endl;
-		return false;
-	}
-	ofs.write(payload.data(), size);
-	ofs.close();
-
-	std::cout << "Successfully extracted resources" << std::endl;
-
-	return true;
-}
-
 static DWORD GetPid(const std::wstring& imageName)
 {
 	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -148,10 +100,7 @@ int main(int argc, char* argv[])
 		std::cerr << "Usage: NoMoreCrash.exe <PID> OR NoMoreCrash.exe --im <NAME> OR NoMoreCrash.exe --ex <PATH> <ARGS>" << std::endl;
 		return 1;
 	}
-
-	if (!ExtractFromOwnFile(PAYLOAD_SIZE, "Payload.dll"))
-		return 1;
-
+	
 	std::vector<std::string> args(argv + 1, argv + argc);
 	DWORD targetPid = 0;
 
